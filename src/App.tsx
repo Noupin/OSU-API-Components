@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Card } from './Components/Card';
+import { CardProps } from './Models/CardProps';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    var Erin: CardProps = {
+        FirstName: "Erin",
+        LastName: "Egersheim",
+        Position: "Secratary and Treasurer",
+        Email: "egersheim.1@osu.edu"
+    }
+
+    var Noah: CardProps = {
+        FirstName: "Noah",
+        LastName: "Perkins",
+        Position: "Web Dev",
+        Email: "perkins.539@osu.edu",
+        ImageURL: "https://llandscapes-10674.kxcdn.com/wp-content/uploads/2019/07/lighting.jpg"
+    }
+
+    return (
+        <div style={{width: "100vw", height: "100vh", backgroundColor: "#1f1f1f", display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Card props={Erin}/>
+            <p>s</p>
+            <Card props={Noah}/>
+        </div>
+    );
 }
 
 export default App;
