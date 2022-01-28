@@ -21,7 +21,8 @@ function App() {
     }
 
     return (
-        <div style={{width: "100vw", height: "100vh", backgroundColor: "#1f1f1f", display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div style={{width: "100vw", height: "300vh", backgroundColor: "#1f1f1f",
+        display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             {/*<IDCard props={Erin}/>
             <p>s</p>
             <IDCard props={Noah}/>*/}

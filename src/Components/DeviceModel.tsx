@@ -1,12 +1,15 @@
 import * as THREE from "three";
-import { FC, useLayoutEffect, useRef } from "react";
+import { FC, useLayoutEffect, useRef, useState } from "react";
 import { Props } from "../Models/Props";
 import { DeviceModelProps } from "../Models/DeviceModelProps";
 import { isWebGL } from "../Helpers";
+import { useIntersection } from "../Hooks";
 
 export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
     const modelRef = useRef<HTMLDivElement>(null);
+    const inView = useIntersection(modelRef, "-25%");
     const hasWebGL = isWebGL();
+    const [rotation, setRotation] = useState(new THREE.Euler(0, 0, 0));
 
     const xRot = props.xRot ? props.xRot : 0.01;
     const yRot = props.yRot ? props.yRot : 0.01;
@@ -33,31 +36,40 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
             
             modelRef.current?.appendChild(renderer.domElement);
             
-            const geometry = new THREE.BoxGeometry(1, 2, 1);
+            const geometry = new THREE.BoxGeometry(2, 4, 2);
             const material = new THREE.MeshBasicMaterial({color: 0x40826D});
             const mesh = new THREE.Mesh(geometry, material);
             
             scene.add(mesh);
             camera.position.z = 5;
+
+            if(mesh.rotation.equals(new THREE.Euler(0, 0, 0))){
+                mesh.rotation.x = rotation?.x
+                mesh.rotation.y = rotation?.y
+                mesh.rotation.z = rotation.z
+            }
             
-            const animate = function () {
+            const animate = () => {
                 requestAnimationFrame(animate);
 
-                mesh.rotation.x += xRot;
-                mesh.rotation.y += yRot;
-                mesh.rotation.z += zRot;
+                if (inView) {
+                    mesh.rotation.x += xRot;
+                    mesh.rotation.y += yRot;
+                    mesh.rotation.z += zRot;
+                }
 
                 renderer.render(scene, camera);
             };
             
             animate();
+            setRotation(mesh.rotation)
 
             return () => {
                 modelRef.current?.removeChild(renderer.domElement);
                 return;
             }
         }
-    }, []);
+    }, [inView]);
 
 
     component = !hasWebGL ? component : (
