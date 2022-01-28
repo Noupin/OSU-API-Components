@@ -4,6 +4,5 @@ export interface CardProps{
     Position: string;
     Email: string;
     ImageURL?: string;
-    Description?: string;
     Pronouns?: string;
 }

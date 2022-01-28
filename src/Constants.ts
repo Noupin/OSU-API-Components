@@ -1,8 +1,6 @@
 export const colors = [
-    "#BB0000",
-    "#B50047",
-    "#902672",
-    "#5D4080",
-    "#324973",
-    "#2F4858"
+    "#BB0000", // Crimson
+    "#B3B3B3", // Light Grey
+    "#414141", // Dark Grey
+    "#DCDEDB", // Off White
 ]
