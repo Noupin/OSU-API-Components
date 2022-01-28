@@ -1,4 +1,5 @@
 import './App.css';
+import { DeviceModel } from './Components/DeviceModel';
 import { IDCard } from './Components/IDCard';
 import { CardProps } from './Models/CardProps';
 
@@ -21,9 +22,10 @@ function App() {
 
     return (
         <div style={{width: "100vw", height: "100vh", backgroundColor: "#1f1f1f", display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <IDCard props={Erin}/>
+            {/*<IDCard props={Erin}/>
             <p>s</p>
-            <IDCard props={Noah}/>
+            <IDCard props={Noah}/>*/}
+            <DeviceModel props={{ModelURL: "", ImageURL: "", width: 400, height: 400}}/>
         </div>
     );
 }
