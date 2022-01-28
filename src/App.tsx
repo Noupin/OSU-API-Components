@@ -1,5 +1,5 @@
 import './App.css';
-import { Card } from './Components/Card';
+import { IDCard } from './Components/IDCard';
 import { CardProps } from './Models/CardProps';
 
 function App() {
@@ -15,14 +15,15 @@ function App() {
         LastName: "Perkins",
         Position: "Web Dev",
         Email: "perkins.539@osu.edu",
-        ImageURL: "https://llandscapes-10674.kxcdn.com/wp-content/uploads/2019/07/lighting.jpg"
+        ImageURL: "https://llandscapes-10674.kxcdn.com/wp-content/uploads/2019/07/lighting.jpg",
+        Pronouns: "He/His"
     }
 
     return (
         <div style={{width: "100vw", height: "100vh", backgroundColor: "#1f1f1f", display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <Card props={Erin}/>
+            <IDCard props={Erin}/>
             <p>s</p>
-            <Card props={Noah}/>
+            <IDCard props={Noah}/>
         </div>
     );
 }

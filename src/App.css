@@ -2,6 +2,11 @@
   --radiusSize: 25;
 }
 
+div{
+    margin: 0;
+    padding: 0;
+}
+
 .borderRadius-1{
     border-radius: 5px !important;
 }
@@ -21,7 +26,15 @@
     border-radius: 50% !important;
 }
 
-div{
+.centerText{
+    text-align: center;
+}
+
+.secondaryText{
+    color: gray;
+}
+
+.noSpacing{
     margin: 0;
     padding: 0;
 }
