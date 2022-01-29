@@ -2,8 +2,9 @@ import * as THREE from "three";
 import { FC, useLayoutEffect, useRef, useState } from "react";
 import { Props } from "../Models/Props";
 import { DeviceModelProps } from "../Models/DeviceModelProps";
-import { isWebGL } from "../Helpers";
+import { fitCameraToObject, isWebGL } from "../Helpers";
 import { useIntersection } from "../Hooks";
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
     const modelRef = useRef<HTMLDivElement>(null);
@@ -11,7 +12,7 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
     const hasWebGL = isWebGL();
     const [rotation, setRotation] = useState(new THREE.Euler(0, 0, 0));
 
-    const xRot = props.xRot ? props.xRot : 0.01;
+    const xRot = props.xRot ? props.xRot : 0;
     const yRot = props.yRot ? props.yRot : 0.01;
     const zRot = props.zRot ? props.zRot : 0;
 
@@ -27,8 +28,13 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
     useLayoutEffect(() => {
         if (hasWebGL) {
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, props.width/props.height, 0.1, 1000);
+            const camera = new THREE.PerspectiveCamera(90, props.width/props.height, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer();
+            const loader = new GLTFLoader();
+
+            const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 3);
+            light.position.set(5, 5, 5);
+            scene.add(light)
 
             renderer.setSize(props.width, props.height);
             renderer.setPixelRatio(window.devicePixelRatio);
@@ -36,13 +42,20 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
             
             modelRef.current?.appendChild(renderer.domElement);
             
-            const geometry = new THREE.BoxGeometry(2, 4, 2);
+            var mesh: THREE.Group | THREE.Mesh
+            const geometry = new THREE.BoxGeometry(2, 2, 2);
             const material = new THREE.MeshBasicMaterial({color: 0x40826D});
-            const mesh = new THREE.Mesh(geometry, material);
-            
-            scene.add(mesh);
-            camera.position.z = 5;
+            mesh = new THREE.Mesh(geometry, material);
 
+            loader.load(props.ModelURL, gltf => {
+                mesh = gltf.scene;
+                scene.add(mesh);
+            });
+
+            //When in update loop the visualization give motion
+            //sickness but does stay in frame the whole time
+            fitCameraToObject(camera, mesh)
+            
             if(mesh.rotation.equals(new THREE.Euler(0, 0, 0))){
                 mesh.rotation.x = rotation?.x
                 mesh.rotation.y = rotation?.y
@@ -62,7 +75,7 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
             };
             
             animate();
-            setRotation(mesh.rotation)
+            setRotation(mesh!.rotation)
 
             return () => {
                 modelRef.current?.removeChild(renderer.domElement);

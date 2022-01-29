@@ -2,6 +2,7 @@ import './App.css';
 import { DeviceModel } from './Components/DeviceModel';
 import { IDCard } from './Components/IDCard';
 import { CardProps } from './Models/CardProps';
+import { DeviceModelProps } from './Models/DeviceModelProps';
 
 function App() {
     var Erin: CardProps = {
@@ -20,13 +21,20 @@ function App() {
         Pronouns: "He/His"
     }
 
+    var Robot: DeviceModelProps = {
+        ModelURL: "./gltfmodels/robot/scene.gltf",
+        ImageURL: "",
+        width: 400,
+        height: 400
+    }
+
     return (
-        <div style={{width: "100vw", height: "300vh", backgroundColor: "#1f1f1f",
+        <div style={{width: "100vw", height: "100vh", backgroundColor: "#1f1f1f",
         display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             {/*<IDCard props={Erin}/>
             <p>s</p>
             <IDCard props={Noah}/>*/}
-            <DeviceModel props={{ModelURL: "", ImageURL: "", width: 400, height: 400}}/>
+            <DeviceModel props={Robot}/>
         </div>
     );
 }
