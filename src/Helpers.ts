@@ -4,7 +4,7 @@ export function randomElement<T>(arr: T[]){
     return arr[Math.floor(Math.random()*arr.length)]
 }
 
-export function isWebGL () { 
+export function isWebGL(){ 
     try {
         var canvas = document.createElement('canvas'); 
         return !!window.WebGLRenderingContext && 
@@ -21,9 +21,10 @@ export function fitCameraToObject(camera: THREE.PerspectiveCamera, mesh: THREE.O
     boundingBox.getSize(size)
 
     const fov = camera.fov * (Math.PI/180);
-    const fovh = 2*Math.atan(Math.tan(fov/2) * camera.aspect);
-    let dx = size.z/2 + Math.abs(size.x/2 / Math.tan(fovh/2));
+    const fovV = 2*Math.atan(Math.tan(fov/2) * camera.aspect);
+    let dx = size.z/2 + Math.abs(size.x/2 / Math.tan(fovV/2));
     let dy = size.z/2 + Math.abs(size.y/2 / Math.tan(fov/2));
+    console.log(`Size(x, y, z): ${size.x}, ${size.y}, ${size.z}\nFOV: ${fov}, FOV Vert: ${fovV}\nDx: ${dx}, Dy: ${dy}`)
     let cameraZ = Math.max(dx, dy);
 
     camera.position.set(mesh.position.x, mesh.position.y, mesh.position.z)

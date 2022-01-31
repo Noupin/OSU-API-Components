@@ -28,9 +28,16 @@ function App() {
         height: 400
     }
 
+    var Hand: DeviceModelProps = {
+        ModelURL: "./gltfmodels/hand.gltf",
+        ImageURL: "",
+        width: 400,
+        height: 400
+    }
+
     return (
-        <div style={{width: "100vw", height: "100vh", backgroundColor: "#1f1f1f",
-        display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div style={{width: "100vw", height: "300vh", backgroundColor: "#1f1f1f",
+        display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: "column"}}>
             {/*<IDCard props={Erin}/>
             <p>s</p>
             <IDCard props={Noah}/>*/}
