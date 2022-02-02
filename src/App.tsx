@@ -27,6 +27,12 @@ function App() {
         width: 400,
         height: 400
     }
+    var Cube: DeviceModelProps = {
+        ModelURL: "./gltfmodels/robot/scene.glt",
+        ImageURL: "",
+        width: 400,
+        height: 400
+    }
 
     var Hand: DeviceModelProps = {
         ModelURL: "./gltfmodels/hand.gltf",
@@ -36,12 +42,13 @@ function App() {
     }
 
     return (
-        <div style={{width: "100vw", height: "300vh", backgroundColor: "#1f1f1f",
+        <div style={{width: "100vw", minHeight: "300vh", backgroundColor: "#1f1f1f",
         display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: "column"}}>
             {/*<IDCard props={Erin}/>
             <p>s</p>
             <IDCard props={Noah}/>*/}
             <DeviceModel props={Robot}/>
+            <DeviceModel props={Cube}/>
         </div>
     );
 }

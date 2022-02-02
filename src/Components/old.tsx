@@ -38,7 +38,7 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
             
             const geometry = new THREE.BoxGeometry(2, 4, 2);
             const material = new THREE.MeshBasicMaterial({color: 0x40826D});
-            const mesh = new THREE.Mesh(geometry, material);
+            var mesh = new THREE.Mesh(geometry, material);
             
             scene.add(mesh);
             camera.position.z = 5;

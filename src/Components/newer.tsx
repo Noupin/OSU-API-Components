@@ -3,10 +3,10 @@ import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Props } from "../Models/Props";
 import { DeviceModelProps } from "../Models/DeviceModelProps";
 import { fitCameraToObject, isWebGL } from "../Helpers";
+import { useIntersection } from "../Hooks";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
-    //To offset the rotation of the models set the initial y rotation to 36 degrees apart for each of 10 items.
     var component = (
         <div className="" style={{display: "flex", alignItems: 'center',
         background: "#ececec", justifyContent: 'center', width: props.width, height: props.height}}>
@@ -17,13 +17,13 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
     const [rotation, setRotation] = useState(new THREE.Euler(0, 0, 0))
     const [loaded, setLoaded] = useState(false)
     const mesh = useRef<THREE.Group | THREE.Mesh>();
-    const cancelAddress = useRef<number>();
     
     const modelRef = useRef<HTMLDivElement>(null);
+    const inView = useIntersection(modelRef, "-25%");
     const hasWebGL = isWebGL();
 
     const xRot = props.xRot ? props.xRot : 0;
-    const yRot = props.yRot ? props.yRot : 0.005;
+    const yRot = props.yRot ? props.yRot : 0.01;
     const zRot = props.zRot ? props.zRot : 0;
     const bgColor = props.bgColor ? props.bgColor : "#000000"
 
@@ -40,6 +40,7 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
     light.position.set(5, 5, 5);
     light.scale.set(100, 100, 100);
 
+
     useEffect(() => {
         loader.load(props.ModelURL, (gltf) => {
             mesh.current = gltf.scene
@@ -55,9 +56,11 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
 
         modelRef.current?.appendChild(renderer.domElement);
 
-        const locMesh = mesh.current
+        //const locMesh = mesh.current
+        const locMesh = new THREE.Mesh(new THREE.BoxGeometry(4, 2, 2), new THREE.MeshBasicMaterial({color: 0x40826D}))
         scene.add(light)
         scene.add(locMesh);
+        //camera.position.z = 3;
         fitCameraToObject(camera, locMesh)
         
         if(locMesh.rotation.equals(new THREE.Euler(0, 0, 0))){
@@ -65,19 +68,14 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
             locMesh.rotation.y = rotation.y
             locMesh.rotation.z = rotation.z
         }
-
+        
         const animate = () => {
-            const bbox = modelRef.current?.getBoundingClientRect()
-            const distanceFromBottom = window.innerHeight-(bbox && bbox.bottom > 0 ? bbox.bottom : 0)
-            //console.log(window.pageYOffset, document.body.clientHeight, bbox)
-            cancelAddress.current = requestAnimationFrame(animate);
-    
-            if(bbox && bbox.top > -0.25*props.height && distanceFromBottom < 0.25*props.height){
+            requestAnimationFrame(animate);
+            if (inView) {
                 locMesh.rotation.x += xRot;
                 locMesh.rotation.y += yRot;
                 locMesh.rotation.z += zRot;
             }
-    
             renderer.render(scene, camera);
         };
         
@@ -85,14 +83,12 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
         setRotation(locMesh.rotation)
 
         return () => {
-            if(cancelAddress.current !== undefined) cancelAnimationFrame(cancelAddress.current)
-            renderer.forceContextLoss()
             modelRef.current?.removeChild(renderer.domElement);
         }
-    }, [loaded])
+    }, [inView, loaded])
 
     component = !hasWebGL ? component : (
-        <div className="borderRadius-2" style={{display: "flex", alignItems: 'center', position: 'relative',
+        <div className="borderRadius-2" style={{display: "flex", alignItems: 'center',
         background: bgColor, justifyContent: 'center', width: props.width+20, height: props.height+20}}>
             <div ref={modelRef}></div>
         </div>

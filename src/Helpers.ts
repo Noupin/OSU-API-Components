@@ -30,3 +30,12 @@ export function fitCameraToObject(camera: THREE.PerspectiveCamera, mesh: THREE.O
     camera.position.set(mesh.position.x, mesh.position.y, mesh.position.z)
     camera.translateZ(cameraZ*offset)
 }
+
+export function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+
+    return {
+        width,
+        height
+    };
+  }

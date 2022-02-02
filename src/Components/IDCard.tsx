@@ -6,7 +6,7 @@ import { Props } from "../Models/Props";
 
 export const IDCard: FC<Props<CardProps>> = ({props}) => {
     return (
-        <div className="borderRadius-2" style={{display: "flex", alignItems: 'center',
+        <div className="borderRadius-2" style={{display: "flex", alignItems: 'center', marginTop: 25,
         width: 150, background: "#ececec", justifyContent: 'center', flexDirection: 'column'}}>
 
             <div className="borderRadius-c" style={{background: randomElement(colors), marginTop: -25,
