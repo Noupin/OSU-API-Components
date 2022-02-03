@@ -27,6 +27,8 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
     const zRot = props.zRot ? props.zRot : 0;
     const bgColor = props.bgColor ? props.bgColor : "#000000"
 
+    var activation = 0.75;
+
     const scene = new THREE.Scene()
     const loader = new GLTFLoader()
     const camera = new THREE.PerspectiveCamera(90, props.width/props.height, 0.1, 1000)
@@ -56,8 +58,10 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
         modelRef.current?.appendChild(renderer.domElement);
 
         const locMesh = mesh.current
+        locMesh.rotation.y = Math.PI
         scene.add(light)
         scene.add(locMesh);
+
         fitCameraToObject(camera, locMesh)
         
         if(locMesh.rotation.equals(new THREE.Euler(0, 0, 0))){
@@ -69,13 +73,16 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
         const animate = () => {
             const bbox = modelRef.current?.getBoundingClientRect()
             const distanceFromBottom = window.innerHeight-(bbox && bbox.bottom > 0 ? bbox.bottom : 0)
-            //console.log(window.pageYOffset, document.body.clientHeight, bbox)
+            const pixelActivation = window.innerHeight*activation;
+            const activeHeight = window.innerHeight-((window.innerHeight-pixelActivation)*2);
+
             cancelAddress.current = requestAnimationFrame(animate);
-    
-            if(bbox && bbox.top > -0.25*props.height && distanceFromBottom < 0.25*props.height){
-                locMesh.rotation.x += xRot;
-                locMesh.rotation.y += yRot;
-                locMesh.rotation.z += zRot;
+
+            if(bbox && bbox.top < pixelActivation && window.innerHeight-bbox.top < pixelActivation){
+                console.log(distanceFromBottom, bbox.top, pixelActivation)
+                //activeHeight - something makes the model start rotating from the backwards position
+                var newY = ((activeHeight-(bbox.top-pixelActivation))/activeHeight)*(Math.PI);
+                locMesh.rotation.y = newY
             }
     
             renderer.render(scene, camera);

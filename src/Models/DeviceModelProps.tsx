@@ -7,4 +7,5 @@ export interface DeviceModelProps{
     yRot?: number
     zRot?: number
     bgColor?: string
+    activation?: number
 }
