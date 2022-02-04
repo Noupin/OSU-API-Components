@@ -28,6 +28,8 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
     const bgColor = props.bgColor ? props.bgColor : "#000000"
 
     var activation = 0.75;
+    const startingRotation = Math.PI;
+    const endingRotation = 0;
 
     const scene = new THREE.Scene()
     const loader = new GLTFLoader()
@@ -58,7 +60,7 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
         modelRef.current?.appendChild(renderer.domElement);
 
         const locMesh = mesh.current
-        locMesh.rotation.y = Math.PI
+        locMesh.rotation.y = startingRotation
         scene.add(light)
         scene.add(locMesh);
 
@@ -84,6 +86,12 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
                     //activeHeight - something makes the model start rotating from the backwards position
                     var newY = ((activeHeight-(bbox.top-pixelActivation))/activeHeight)*(Math.PI);
                     locMesh.rotation.y = newY
+                }
+                else if(bbox && bbox.top > pixelActivation){
+                    locMesh.rotation.y = startingRotation
+                }
+                else if(bbox && window.innerHeight-bbox.top > pixelActivation){
+                    locMesh.rotation.y = endingRotation
                 }
             }
             else{
