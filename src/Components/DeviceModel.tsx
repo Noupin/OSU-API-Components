@@ -78,11 +78,20 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
 
             cancelAddress.current = requestAnimationFrame(animate);
 
-            if(bbox && bbox.top < pixelActivation && window.innerHeight-bbox.top < pixelActivation){
-                console.log(distanceFromBottom, bbox.top, pixelActivation)
-                //activeHeight - something makes the model start rotating from the backwards position
-                var newY = ((activeHeight-(bbox.top-pixelActivation))/activeHeight)*(Math.PI);
-                locMesh.rotation.y = newY
+            if(!props.continuous){
+                if(bbox && bbox.top < pixelActivation && window.innerHeight-bbox.top < pixelActivation){
+                    console.log(distanceFromBottom, bbox.top, pixelActivation)
+                    //activeHeight - something makes the model start rotating from the backwards position
+                    var newY = ((activeHeight-(bbox.top-pixelActivation))/activeHeight)*(Math.PI);
+                    locMesh.rotation.y = newY
+                }
+            }
+            else{
+                if(bbox && bbox.top < pixelActivation && distanceFromBottom < pixelActivation){
+                    locMesh.rotation.x += xRot;
+                    locMesh.rotation.y += yRot;
+                    locMesh.rotation.z += zRot;
+                }
             }
     
             renderer.render(scene, camera);
