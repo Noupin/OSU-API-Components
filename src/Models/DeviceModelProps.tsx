@@ -8,5 +8,5 @@ export interface DeviceModelProps{
     zRot?: number
     bgColor?: string
     activation?: number
-    continuous?: boolean;
+    continuous?: boolean
 }
