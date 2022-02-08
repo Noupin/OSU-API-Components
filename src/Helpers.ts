@@ -23,7 +23,7 @@ export function getMeshSize(mesh: THREE.Object3D): THREE.Vector3{
     return size
 }
 
-export function fitCameraToObject(camera: THREE.PerspectiveCamera, mesh: THREE.Object3D, offset=1.24){
+export function fitCameraToObject(camera: THREE.PerspectiveCamera, mesh: THREE.Object3D, offset=1.1){
     var size = getMeshSize(mesh)
     const horizontalFOV = camera.fov * (Math.PI/180);
     const verticalFOV = 2*Math.atan(Math.tan(horizontalFOV/2) * camera.aspect);
@@ -46,4 +46,8 @@ export function getWindowDimensions() {
         width,
         height
     };
-  }
+}
+
+export function vhToPixels (vh: number) {
+    return Math.round(window.innerHeight / (100 / vh)) + 'px';
+}

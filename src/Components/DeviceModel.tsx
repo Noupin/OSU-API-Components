@@ -17,7 +17,10 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
     const [rotation, setRotation] = useState(new THREE.Euler(0, 0, 0))
     const [loaded, setLoaded] = useState(false)
     const mesh = useRef<THREE.Group | THREE.Mesh | THREE.Object3D>();
-    const material = new THREE.MeshStandardMaterial({color: palette.text, roughness: 0})
+    const material = new THREE.MeshStandardMaterial({ 
+        color: palette.dark,
+        roughness: 0
+    }) 
     const cancelAddress = useRef<number>();
     
     const modelRef = useRef<HTMLDivElement>(null);
