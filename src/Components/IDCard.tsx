@@ -7,7 +7,7 @@ import { Props } from "../Models/Props";
 export const IDCard: FC<Props<CardProps>> = ({props}) => {
     return (
         <div className="borderRadius-2" style={{display: "flex", alignItems: 'center', margin: 10, marginTop: 25,
-        width: 150, background: palette.light, justifyContent: 'center', flexDirection: 'column'}}>
+        width: 150, background: palette.light, justifyContent: 'center', flexDirection: 'column', padding: 5}}>
 
             <div className="borderRadius-c" style={{background: randomElement(colors), marginTop: -25,
                 height: 100, width: 100, display: 'flex', justifyContent: 'center', alignItems: 'center',
@@ -29,7 +29,9 @@ export const IDCard: FC<Props<CardProps>> = ({props}) => {
                 <p className="centerText">{props.Position}</p>
             </div>
 
-            <p className="secondaryText centerText" style={{fontSize: 12}}>{props.Email}</p>
+            <p className="secondaryText centerText" style={{fontSize: 12, overflowWrap: 'anywhere'}}>
+                {props.Email}
+            </p>
 
         </div>
     );
