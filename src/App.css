@@ -39,9 +39,35 @@ div{
     padding: 0;
 }
 
+.hoverSpin{
+    transition: transform .5s ease-in-out;
+}
+
+.hoverSpin:hover{
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+}
 .glassmorphic{
     background: rgba( 255, 255, 255, 0.15 );
     backdrop-filter: blur( 15px );
     -webkit-backdrop-filter: blur( 15px );
     border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.circlesOnRight{
+    background: radial-gradient(100px circle at 65% 40%, 
+                                #BD8181 50%, transparent 51%),
+                radial-gradient(100px circle at 95% 30%, 
+                                #798897 50%, transparent 51%),
+                radial-gradient(215px circle at 85% 70%, 
+                                #CE0F3D 50%, transparent 51%)
+}
+
+.circlesOnLeft{
+    background: radial-gradient(100px circle at 15% 40%, 
+                                #BD8181 50%, transparent 51%),
+                radial-gradient(100px circle at 45% 30%, 
+                                #798897 50%, transparent 51%),
+                radial-gradient(215px circle at 35% 70%, 
+                                #CE0F3D 50%, transparent 51%)
 }

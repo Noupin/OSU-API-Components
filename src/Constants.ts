@@ -12,4 +12,5 @@ export const palette = {
     'dark': '#798897',
     'text': '#BD8181',
     'rich': '#CE0F3D',
+    'offwhite': "#EDEDED",
 }

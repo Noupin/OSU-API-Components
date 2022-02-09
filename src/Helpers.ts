@@ -50,3 +50,7 @@ export function getWindowDimensions() {
 export function vhToPixels (vh: number) {
     return Math.round(window.innerHeight / (100 / vh)) + 'px';
 }
+
+export function scrollIntoView(ref: React.MutableRefObject<HTMLElement | null>){
+    ref.current?.scrollIntoView({behavior: "smooth"})
+}
