@@ -27,4 +27,5 @@ export const PhoenixReborn: DeviceModelProps = {
     ImageURL: "",
     width: 400,
     height: 400,
+    glassmorphic: true
 }

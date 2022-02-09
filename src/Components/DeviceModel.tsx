@@ -7,8 +7,11 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { palette } from "../Constants";
 
 export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
+    if(props.glassmorphic === undefined) props.glassmorphic = true
+
+    var classNames = props.glassmorphic ? "glassmorphic" : "";
     var component = (
-        <div className="" style={{display: "flex", alignItems: 'center',
+        <div className={classNames} style={{display: "flex", alignItems: 'center',
         background: "#ececec", justifyContent: 'center', width: props.width, height: props.height}}>
             <image href={props.ImageURL}/>
         </div>
@@ -17,10 +20,7 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
     const [rotation, setRotation] = useState(new THREE.Euler(0, 0, 0))
     const [loaded, setLoaded] = useState(false)
     const mesh = useRef<THREE.Group | THREE.Mesh | THREE.Object3D>();
-    const material = new THREE.MeshStandardMaterial({ 
-        color: palette.dark,
-        roughness: 0
-    }) 
+    const material = new THREE.MeshStandardMaterial({color: palette.light, roughness: 0.4, metalness: 0}) //new THREE.MeshPhongMaterial({color: palette.light})
     const cancelAddress = useRef<number>();
     
     const modelRef = useRef<HTMLDivElement>(null);
@@ -37,15 +37,15 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
 
     const scene = new THREE.Scene()
     const loader = new GLTFLoader()
-    const camera = new THREE.PerspectiveCamera(15, props.width/props.height, 0.1, 1000)
+    const camera = new THREE.PerspectiveCamera(15, props.width/props.height, 0.1, 5)
 
     const renderer = new THREE.WebGLRenderer()
     renderer.setSize(props.width, props.height);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(bgColor, props.bgColor ? 1 : 0) //0 is transparent 1 uses the color
 
-    const light = new THREE.HemisphereLight("#cae2ed", "#21282b", 1.5);
-    light.position.set(0, 0, 0);
+    const light = new THREE.DirectionalLight("#FFFFFF", 0.75);
+    light.position.set(0, 4, 4);
 
     useEffect(() => {
         if(!hasWebGL) return;
@@ -59,7 +59,7 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
             mesh.current = gltf.scene || gltf.scenes[0];
             setLoaded(true)
         }, () => {}, () => {
-            mesh.current = new THREE.Mesh(new THREE.BoxGeometry(16, 2, 2), material)
+            mesh.current = new THREE.Mesh(new THREE.BoxGeometry(2, 1, 1), material)
             setLoaded(true)
         })
     }, [])
@@ -137,9 +137,11 @@ export const DeviceModel: FC<Props<DeviceModelProps>> = ({props}) => {
         }
     }, [loaded])
 
+    classNames += " borderRadius-2"
     component = !hasWebGL ? component : (
-        <div className="borderRadius-2" style={{display: "flex", alignItems: 'center', position: 'relative',
-        background: bgColor ? bgColor : undefined, justifyContent: 'center', width: props.width+20, height: props.height+20}}>
+        <div className={classNames} style={{display: "flex", alignItems: 'center', position: 'relative',
+        background: bgColor ? bgColor : undefined, justifyContent: 'center', width: props.width+20,
+        height: props.height+20}}>
             <div ref={modelRef}></div>
         </div>
     );

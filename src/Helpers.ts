@@ -29,10 +29,9 @@ export function fitCameraToObject(camera: THREE.PerspectiveCamera, mesh: THREE.O
     const verticalFOV = 2*Math.atan(Math.tan(horizontalFOV/2) * camera.aspect);
     let xDistance = size.z/2 + Math.abs(size.x/2 / Math.tan(verticalFOV/2));
     let yDistance = size.z/2 + Math.abs(size.y/2 / Math.tan(horizontalFOV/2));
-    console.log(`Size(x, y, z): ${size.x}, ${size.y}, ${size.z}\nFOV: ${horizontalFOV}, FOV Vert: ${verticalFOV}\nDx: ${xDistance}, Dy: ${yDistance}`)
+    //console.log(`Size(x, y, z): ${size.x}, ${size.y}, ${size.z}\nFOV: ${horizontalFOV}, FOV Vert: ${verticalFOV}\nDx: ${xDistance}, Dy: ${yDistance}`)
     let cameraZ = Math.max(xDistance, yDistance);
     let fov = 2 * Math.atan((size.x/camera.aspect) / (2*cameraZ)) * (180/Math.PI);
-    console.log(fov)
 
     camera.position.set(mesh.position.x, mesh.position.y, mesh.position.z)
     camera.translateZ(cameraZ*offset)

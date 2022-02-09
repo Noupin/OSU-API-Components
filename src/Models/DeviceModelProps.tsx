@@ -9,4 +9,5 @@ export interface DeviceModelProps{
     bgColor?: string
     activation?: number
     continuous?: boolean
+    glassmorphic?: boolean
 }
