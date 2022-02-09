@@ -55,11 +55,11 @@ div{
 }
 
 .circlesOnRight{
-    background: radial-gradient(100px circle at 65% 40%, 
+    background: radial-gradient(100px circle at 55% 40%, 
                                 #BD8181 50%, transparent 51%),
-                radial-gradient(100px circle at 95% 30%, 
+                radial-gradient(100px circle at 85% 30%, 
                                 #798897 50%, transparent 51%),
-                radial-gradient(215px circle at 85% 70%, 
+                radial-gradient(215px circle at 75% 70%, 
                                 #CE0F3D 50%, transparent 51%)
 }
 
@@ -70,4 +70,16 @@ div{
                                 #798897 50%, transparent 51%),
                 radial-gradient(215px circle at 35% 70%, 
                                 #CE0F3D 50%, transparent 51%)
+}
+
+.fadeIn {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+}
+/* Fade-Out Effect */
+.fadeOut {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
 }

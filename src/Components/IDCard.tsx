@@ -1,13 +1,13 @@
 import { FC } from "react";
-import { colors } from "../Constants";
+import { colors, palette } from "../Constants";
 import { randomElement } from "../Helpers";
 import { CardProps } from "../Models/CardProps";
 import { Props } from "../Models/Props";
 
 export const IDCard: FC<Props<CardProps>> = ({props}) => {
     return (
-        <div className="borderRadius-2" style={{display: "flex", alignItems: 'center', marginTop: 25,
-        width: 150, background: "#ececec", justifyContent: 'center', flexDirection: 'column'}}>
+        <div className="borderRadius-2" style={{display: "flex", alignItems: 'center', margin: 10, marginTop: 25,
+        width: 150, background: palette.light, justifyContent: 'center', flexDirection: 'column'}}>
 
             <div className="borderRadius-c" style={{background: randomElement(colors), marginTop: -25,
                 height: 100, width: 100, display: 'flex', justifyContent: 'center', alignItems: 'center',

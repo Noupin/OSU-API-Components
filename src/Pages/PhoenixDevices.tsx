@@ -3,11 +3,13 @@ import { palette } from "../Constants";
 import { FlexyHand2, PhoenixReborn, Talon3 } from "../Data/Devices";
 import { HiPlus } from "react-icons/hi";
 import { BsChevronCompactDown } from "react-icons/bs";
-import { scrollIntoView } from "../Helpers";
+import { scrollIntoViewCentered } from "../Helpers";
 import { useRef } from "react";
+import { IDCard } from "../Components/IDCard";
+import { Alex, Braden, Erin, Noah } from "../Data/Identities";
 
 export function PhoenixDevicesPage(){
-    const ref = useRef<HTMLDivElement>(null)
+    const firstItemRef = useRef<HTMLDivElement>(null)
 
     return (
         <div style={{backgroundColor: palette.offwhite, color: palette.rich, margin: 0, padding: 0}}>
@@ -24,15 +26,18 @@ export function PhoenixDevicesPage(){
                     <img style={{objectFit: "contain", height: 200, width: 200}} 
                     src="https://images.squarespace-cdn.com/content/v1/5d1209b82e5cc90001b31732/1561997209958-JO57BD4PVTXFAURPCZMW/012.png?format=1500w"/>
                 </div>
+
                 <div style={{position: "absolute", bottom: 0, left: 0, right: 0, fontSize: 50, display: 'flex',
                 justifyContent: 'center', alignItems: 'middle', marginBottom: '1vh'}}>
-                    <BsChevronCompactDown className="hoverSpin"
-                    onClick={() => {scrollIntoView(ref)}}/>
+                    <BsChevronCompactDown className="hoverSpin" onClick={() => {scrollIntoViewCentered(firstItemRef)}}/>
                 </div>
             </div>
 
-            <div ref={ref} style={{display: 'flex', justifyContent: 'center', alignItems: 'center',
-            flexDirection: "row", flexGrow: 1, paddingLeft: "10%", paddingRight: "10%"}} className="circlesOnRight">
+            <div style={{height: "25vh"}}></div>
+
+            <div ref={firstItemRef} style={{display: 'flex', justifyContent: 'center', alignItems: 'center',
+            flexDirection: "row", flexGrow: 1, padding: "5%", paddingLeft: "10%", paddingRight: "10%"}}
+            className="circlesOnRight">
                 <div style={{flex: 1, padding: 15}}>
                     <h2>Unlimbted Phoenix</h2>
                     <p>This E-Nable hand has a thermoformed gauntlet at the wrist. The Phoenix was designed by Team UnLimbited, and is available on Thingiverse. On Thingiverse, users are able to select a design for the left or right hand. All files necessary for the Phoenix hand will be generated and included in a single .zip file at the correct scale.</p>
@@ -43,7 +48,8 @@ export function PhoenixDevicesPage(){
             </div>
 
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',
-            flexDirection: "row", flexGrow: 1, padding: "10%", paddingRight: "10%"}} className="circlesOnLeft">
+            flexDirection: "row", flexGrow: 1, padding: "5%", paddingLeft: "10%", paddingRight: "10%"}}
+            className="circlesOnLeft">
                 <div style={{flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <DeviceModel props={Talon3}/>
                 </div>
@@ -54,7 +60,8 @@ export function PhoenixDevicesPage(){
             </div>
 
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',
-            flexDirection: "row", flexGrow: 1, paddingLeft: "10%", paddingRight: "10%"}} className="circlesOnRight">
+            flexDirection: "row", flexGrow: 1, padding: "5%", paddingLeft: "10%", paddingRight: "10%"}}
+            className="circlesOnRight">
                 <div style={{flex: 1, padding: 15}}>
                     <h2>Phoenix Reborn</h2>
                     <p>The Phoenix Reborn is a remix of the Phoenix Hand and the UnLimbited Arm, designed by Albert Fung. The new aspects of this hand allow an elastic cord to go through tunnels in the hand and in each finger tip. This design also lacks parts in previous Phoenix designs that would not survive heat found in the tropics, making it feasible for more parts of the world.</p>
@@ -63,7 +70,17 @@ export function PhoenixDevicesPage(){
                     <DeviceModel props={PhoenixReborn}/>
                 </div>
             </div>
-            <div style={{height: "25vh"}}></div>
+            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center',
+            alignItems: "center", marginTop: "5vh", padding: '3vh'}}>
+                <h2>Contributors</h2>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <IDCard props={Erin}/>
+                    <IDCard props={Noah}/>
+                    <IDCard props={Alex}/>
+                    <IDCard props={Braden}/>
+                </div>
+            </div>
+            <div style={{height: '25vh'}}></div>
         </div>
     );
 }

@@ -47,10 +47,18 @@ export function getWindowDimensions() {
     };
 }
 
-export function vhToPixels (vh: number) {
+export function vhToPixelsString(vh: number): string {
     return Math.round(window.innerHeight / (100 / vh)) + 'px';
 }
 
-export function scrollIntoView(ref: React.MutableRefObject<HTMLElement | null>){
+export function vhToPixelsNumber(vh: number): number {
+    return Math.round(window.innerHeight / (100 / vh));
+}
+
+export function scrollIntoViewTop(ref: React.MutableRefObject<HTMLElement | null>){
     ref.current?.scrollIntoView({behavior: "smooth"})
+}
+
+export function scrollIntoViewCentered(ref: React.MutableRefObject<HTMLElement | null>){
+    ref.current?.scrollIntoView({behavior: "smooth", block: 'center', inline: 'center'})
 }
